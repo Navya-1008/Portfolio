@@ -1,0 +1,25 @@
+name: Sync Resume from Google Drive
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # runs every night at midnight
+  workflow_dispatch:       # allows manual trigger from GitHub
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Download resume from Google Drive
+        run: |
+          curl -L "https://drive.google.com/uc?export=download&id=1csMOKDPZ5ouxeirg8h5oplECzSdpERvB" -o resume.pdf
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add resume.pdf
+          git diff --cached --quiet || git commit -m "sync resume from google drive"
+          git push
