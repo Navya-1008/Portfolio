@@ -1,0 +1,605 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-dark: #000000;
+    --accent: #FF4D00;
+    --accent-glow: rgba(255, 77, 0, 0.3);
+    --text-main: #FFFFFF;
+    --text-dim: #A0A0A0;
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --container-padding: 2rem;
+    --section-spacing: 8rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+}
+
+/* Background Canvas */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Navbar Redesign: Subtle Glass Capsule */
+.navbar {
+    position: fixed;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    padding: 0.4rem 1.2rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0;
+}
+
+.nav-link {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.4rem 0.8rem;
+    border-radius: 100px;
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link.active {
+    color: white;
+    background: var(--accent);
+    box-shadow: 0 0 10px rgba(255, 77, 0, 0.3);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+section {
+    padding: var(--section-spacing) 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: var(--transition);
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: var(--bg-dark);
+    position: relative;
+    padding: 0 1rem;
+}
+
+.hero .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: clamp(3rem, 10vw, 7rem);
+    margin-bottom: 1rem;
+    letter-spacing: -2px;
+    position: relative;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+    color: white;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #ff00c1;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+    animation: glitch-anim2 1s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% { clip: rect(31px, 9999px, 94px, 0); }
+    5% { clip: rect(70px, 9999px, 71px, 0); }
+    10% { clip: rect(29px, 9999px, 83px, 0); }
+    /* ... shortened for brevity but will include full effect ... */
+    100% { clip: rect(67px, 9999px, 62px, 0); }
+}
+
+@keyframes glitch-anim2 {
+    0% { clip: rect(44px, 9999px, 56px, 0); }
+    100% { clip: rect(26px, 9999px, 33px, 0); }
+}
+
+.accent-text {
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: var(--text-dim);
+    max-width: 600px;
+}
+
+/* Contact Links in Hero */
+.hero-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.hero-links a {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    background: var(--glass);
+    transition: var(--transition);
+}
+
+.hero-links a:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+.resume-btn {
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: white !important;
+}
+
+.resume-btn:hover {
+    box-shadow: 0 0 25px var(--accent) !important;
+}
+
+/* Section Titles */
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--accent);
+}
+
+/* Cards (Education, Projects) */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent);
+    box-shadow: 0 20px 40px rgba(255, 77, 0, 0.1);
+}
+
+.card h3 {
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.summary-card {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+.experience-card {
+    border-left: 4px solid var(--accent);
+    background: rgba(255, 77, 0, 0.05);
+}
+
+/* Flowing Border for Skill Categories */
+.skill-category {
+    margin-bottom: 4rem;
+    padding: 2.5rem;
+    position: relative;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 24px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.skill-category::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        transparent, 
+        transparent, 
+        transparent, 
+        var(--accent)
+    );
+    animation: rotate-border 4s linear infinite;
+    z-index: -2;
+}
+
+.skill-category::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--bg-dark);
+    border-radius: 22px;
+    z-index: -1;
+}
+
+@keyframes rotate-border {
+    100% { transform: rotate(360deg); }
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.skill-tag {
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-main);
+    transition: var(--transition);
+    cursor: default;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Tech Stack Tags */
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin: 1rem 0 1.5rem 0;
+    justify-content: center;
+}
+
+.tech-badge {
+    background: rgba(255, 77, 0, 0.1);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Flash Cards Projects Refined V4 */
+.project-carousel {
+    position: relative;
+    min-height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4rem 0;
+}
+
+.flash-card {
+    position: absolute;
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    min-height: 400px;
+    background: var(--glass);
+    border-radius: 30px;
+    padding: 4rem;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+}
+
+.flash-card.active {
+    display: flex;
+    animation: slide-in 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 60px rgba(255, 77, 0, 0.1);
+}
+
+.card-content {
+    flex: 1;
+    padding: 0 3rem;
+    text-align: center;
+}
+
+.card-arrow {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    transition: var(--transition);
+    cursor: pointer;
+    z-index: 10;
+}
+
+.card-arrow:hover {
+    background: var(--accent);
+    transform: scale(1.2);
+}
+
+.card-arrow svg {
+    width: 30px;
+    height: 30px;
+    fill: white;
+}
+
+/* Animated Border for Cards on Hover */
+.flash-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 30px var(--accent-glow);
+}
+
+@keyframes slide-in {
+    from { opacity: 0; transform: translateX(100px) scale(0.9); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.flash-card h3 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.flash-card p {
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+}
+
+.carousel-nav {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.nav-btn {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.nav-btn:hover {
+    background: var(--accent);
+}
+
+/* Interests Grid */
+.interests-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.interest-item {
+    flex: 1 1 200px;
+    max-width: calc(25% - 20px);
+    background: var(--glass);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.interest-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+    background: rgba(255, 77, 0, 0.05);
+}
+
+.interest-item .icon {
+    margin-bottom: 1rem;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+    :root {
+        --section-spacing: 6rem;
+    }
+    
+    .interest-item {
+        max-width: calc(33.33% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --container-padding: 1.5rem;
+        --section-spacing: 5rem;
+    }
+
+    .navbar {
+        width: 90%;
+        padding: 0.3rem 0.8rem;
+    }
+
+    .nav-link {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .hero h1 {
+        font-size: clamp(2.5rem, 12vw, 4.5rem);
+    }
+
+    .hero-links {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        align-items: center;
+    }
+
+    .hero-links a {
+        width: 100%;
+        max-width: 250px;
+        text-align: center;
+    }
+
+    .interest-item {
+        max-width: calc(50% - 20px);
+    }
+
+    .flash-card {
+        padding: 2rem;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .card-content {
+        padding: 1.5rem 0;
+    }
+
+    .card-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .card-arrow.prev { left: -10px; }
+    .card-arrow.next { right: -10px; }
+}
+
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .interest-item {
+        max-width: 100%;
+    }
+
+    .skill-tag {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+    }
+
+    .navbar {
+        top: 1rem;
+    }
+
+    .nav-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.2rem;
+    }
+
+    .nav-link {
+        padding: 0.2rem 0.4rem;
+    }
+}
