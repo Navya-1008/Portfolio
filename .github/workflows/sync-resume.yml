@@ -25,4 +25,5 @@ jobs:
           git config user.email "github-actions@github.com"
           git add Navya_BV_Resume.pdf
           git diff --cached --quiet || git commit -m "sync resume from google drive"
+          git pull --rebase origin main
           git push
