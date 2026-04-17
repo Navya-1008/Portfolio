@@ -1,8 +1,6 @@
-name: Sync Resume from Google Drive
+name: Sync Resume from GitHub Releases
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
   workflow_dispatch:
 
 permissions:
@@ -14,18 +12,15 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Download resume from Google Drive
+      - name: Download resume from GitHub Releases
         run: |
-          curl -L "https://drive.google.com/uc?export=download&id=1csMOKDPZ5ouxeirg8h5oplECzSdpERvB&confirm=t" -o Navya_BV_Resume.pdf
+          curl -L "https://github.com/Navya-1008/Portfolio/releases/download/resume/Navya_BV_Resume.pdf" -o Navya_BV_Resume.pdf
 
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add Navya_BV_Resume.pdf
-          git diff --cached --quiet || git commit -m "sync resume from google drive"
+          git diff --cached --quiet || git commit -m "sync resume from releases"
           git push origin HEAD:main --force
