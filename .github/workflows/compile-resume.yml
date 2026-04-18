@@ -1,0 +1,33 @@
+name: Compile LaTeX Resume
+
+on:
+  push:
+    paths:
+      - 'main.tex'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+
+      - name: Move PDF to root
+        run: mv main.pdf Navya_BV_Resume.pdf
+
+      - name: Commit and push PDF
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add Navya_BV_Resume.pdf
+          git diff --cached --quiet || git commit -m "compile resume from latex"
+          git push origin main
