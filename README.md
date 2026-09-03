@@ -3,7 +3,7 @@
 Welcome to my portfolio website. This project showcases my skills, experience, and projects in the fields of Data Science and Machine Learning.
 
 ## 🚀 Live Demo
-You can view the live version of this portfolio at: [Insert Your URL Here]
+You can view the live version of this portfolio at: navya-bv-portfolio.vercel.app/
 
 ## 📂 Project Highlights
 - **AirLink**: Autonomous Airspace Management System using AI.
